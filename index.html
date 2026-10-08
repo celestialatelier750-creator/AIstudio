@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AuraStudio — AI Content Creator</title>
+  <title>AuraStudio — AI Media Creator</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #08090d; color: #ffffff; min-height: 100vh; }
     .app { display: flex; min-height: 100vh; }
-    .sidebar { width: 250px; background: #0d0f15; border-right: 1px solid #22252f; padding: 25px 15px; display: flex; flex-direction: column; flex-shrink: 0; }
-    .logo { display: flex; align-items: center; gap: 12px; padding: 0 10px 30px; }
-    .logo-icon { width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; background: linear-gradient(135deg, #8b5cf6, #ec4899); }
-    .logo-name { font-size: 18px; font-weight: bold; }
-    .section-title { color: #656b7b; font-size: 10px; font-weight: bold; letter-spacing: 2px; padding: 0 10px 10px; }
+    .sidebar { width: 240px; background: #0d0f15; border-right: 1px solid #22252f; padding: 20px 15px; display: flex; flex-direction: column; flex-shrink: 0; }
+    .logo { display: flex; align-items: center; gap: 12px; padding: 0 5px 25px; }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+    .logo-name { font-size: 16px; font-weight: bold; }
+    .section-title { color: #656b7b; font-size: 10px; font-weight: bold; letter-spacing: 2px; padding: 0 5px 8px; }
     .menu { display: flex; flex-direction: column; gap: 5px; }
-    .menu button { border: none; background: transparent; color: #999fad; padding: 12px 10px; border-radius: 10px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; font-size: 13px; }
+    .menu button { border: none; background: transparent; color: #999fad; padding: 10px; border-radius: 8px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; font-size: 13px; }
     .menu button:hover, .menu button.active { background: #191c26; color: white; }
     .menu button.active { box-shadow: inset 3px 0 #a78bfa; }
-    .main { flex: 1; padding: 35px; max-width: 1400px; margin: auto; width: 100%; }
-    .header { margin-bottom: 30px; }
+    .main { flex: 1; padding: 30px; max-width: 1300px; margin: auto; width: 100%; }
+    .header { margin-bottom: 25px; }
     .eyebrow { color: #777d8c; font-size: 10px; letter-spacing: 3px; font-weight: bold; }
-    h1 { font-size: 36px; margin: 8px 0; }
+    h1 { font-size: 32px; margin: 6px 0; }
     h1 span { color: #a78bfa; }
     .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .card { border: 1px solid #22252f; background: linear-gradient(145deg, #12141c, #0e1016); border-radius: 20px; padding: 25px; }
-    textarea { width: 100%; height: 140px; background: #090b10; border: 1px solid #282b35; border-radius: 13px; padding: 15px; color: white; outline: none; font-size: 13px; margin: 15px 0; }
-    .generate { width: 100%; padding: 14px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, #8b5cf6, #c026d3); }
-    .result-box { background: #090b10; border: 1px solid #252832; border-radius: 13px; padding: 18px; margin-top: 15px; min-height: 380px; font-size: 13px; line-height: 1.6; color: #d4d7df; }
-    .media-render { width: 100%; max-height: 380px; object-fit: cover; border-radius: 10px; margin-top: 12px; border: 1px solid #333745; }
-    .scene-card { background: #12151f; border: 1px solid #282c3c; border-radius: 8px; padding: 10px; margin-top: 8px; font-size: 12px; }
+    .card { border: 1px solid #22252f; background: linear-gradient(145deg, #12141c, #0e1016); border-radius: 16px; padding: 20px; }
+    textarea { width: 100%; height: 120px; background: #090b10; border: 1px solid #282b35; border-radius: 10px; padding: 12px; color: white; outline: none; font-size: 13px; margin: 12px 0; }
+    .generate { width: 100%; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, #8b5cf6, #c026d3); }
+    .result-box { background: #090b10; border: 1px solid #252832; border-radius: 10px; padding: 15px; margin-top: 12px; min-height: 360px; font-size: 13px; line-height: 1.5; color: #d4d7df; }
+    .media-render { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #333745; max-height: 320px; object-fit: cover; }
+    .scene-card { background: #12151f; border: 1px solid #282c3c; border-radius: 6px; padding: 8px; margin-top: 6px; font-size: 11px; }
     @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } .sidebar { width: 100%; } .app { display: block; } }
   </style>
 </head>
@@ -38,9 +38,7 @@
   <aside class="sidebar">
     <div class="logo">
       <div class="logo-icon">A</div>
-      <div>
-        <div class="logo-name">AuraStudio</div>
-      </div>
+      <div><div class="logo-name">AuraStudio</div></div>
     </div>
     <div class="section-title">STUDIOS</div>
     <div class="menu">
@@ -59,7 +57,7 @@
     <div class="workspace">
       <section class="card">
         <h2 id="studioTitle">✦ Image Studio</h2>
-        <textarea id="prompt" placeholder="Describe what you want to generate..."></textarea>
+        <textarea id="prompt" placeholder="Describe what you want to generate (e.g., smiling baby, cyber city)..."></textarea>
         <button class="generate" onclick="generateMedia()">Generate AI Visual Media →</button>
       </section>
 
@@ -86,53 +84,53 @@
   }
 
   function generateMedia() {
-    const promptText = document.getElementById('prompt').value.trim();
+    const rawInput = document.getElementById('prompt').value.trim();
     const output = document.getElementById('output');
 
-    if (!promptText) {
+    if (!rawInput) {
       alert('Please enter a description first.');
       return;
     }
 
-    output.innerHTML = '<p style="text-align:center; padding-top:100px;">Rendering AI visual assets... Please wait 3 seconds.</p>';
+    output.innerHTML = '<p style="text-align:center; padding-top:100px;">Generating AI visual assets... Please wait 2 seconds.</p>';
 
-    const encoded = encodeURIComponent(promptText + " 8k resolution cinematic vertical format");
-    const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=540&height=960&nologo=true`;
+    // Clean input text for standard image rendering URL
+    const cleanPrompt = rawInput.toLowerCase().replace(/[^a-z0-9\s]/gi, '').replace(/\s+/g, '_');
+    const imageUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}_cinematic_8k_vertical?width=540&height=960&nologo=true`;
 
     setTimeout(() => {
       if (currentMode === 'image' || currentMode === 'fashion') {
         output.innerHTML = `
-          <b>Visual Concept Render:</b><br>
-          <img src="${imageUrl}" class="media-render" alt="AI Render" /><br><br>
-          <b>Prompt Used:</b><br>
-          <p style="color:#aaa;">${promptText}</p>
+          <b>AI Image Concept Render:</b><br>
+          <img src="${imageUrl}" class="media-render" alt="AI Render" onerror="this.onerror=null; this.src='https://picsum.photos/540/960';" /><br><br>
+          <b>Prompt Applied:</b> <span style="color:#aaa;">"${rawInput}"</span>
         `;
       } else if (currentMode === 'video') {
         output.innerHTML = `
-          <b>60+ Second Video Timeline & Visual Scenes:</b><br>
+          <b>60+ Second Video Sequence Timeline:</b><br>
           
           <div class="scene-card">
             <b>🎬 Scene 1 (0:00 - 0:15) — Hook</b><br>
-            <i>Prompt:</i> "Dramatic opening shot of ${promptText}, high contrast, 8k vertical"
+            <i>Prompt:</i> "Dramatic opening shot of ${rawInput}, 8k vertical"
           </div>
           <div class="scene-card">
-            <b>🎬 Scene 2 (0:15 - 0:30) — Reveal</b><br>
-            <i>Prompt:</i> "Cinematic camera pan showing detailed movement and textures"
+            <b>🎬 Scene 2 (0:15 - 0:30) — Development</b><br>
+            <i>Prompt:</i> "Cinematic camera movement revealing detailed motion"
           </div>
           <div class="scene-card">
-            <b>🎬 Scene 3 (0:30 - 0:45) — Main Concept</b><br>
-            <i>Prompt:</i> "Slow motion close-up focus with atmospheric lighting"
+            <b>🎬 Scene 3 (0:30 - 0:45) — Climax</b><br>
+            <i>Prompt:</i> "Atmospheric lighting with high contrast details"
           </div>
           <div class="scene-card">
             <b>🎬 Scene 4 (0:45 - 1:00+) — Outro</b><br>
-            <i>Prompt:</i> "Fade out view with elegant cinematic glow"
+            <i>Prompt:</i> "Fade out with smooth aesthetic glow"
           </div>
 
-          <p style="margin-top:12px;"><b>Visual Keyframe Render:</b></p>
-          <img src="${imageUrl}" class="media-preview media-render" alt="Keyframe Preview" />
+          <p style="margin-top:10px;"><b>Keyframe Preview:</b></p>
+          <img src="${imageUrl}" class="media-render" alt="Keyframe Preview" onerror="this.onerror=null; this.src='https://picsum.photos/540/960';" />
         `;
       }
-    }, 1200);
+    }, 1000);
   }
 </script>
 
