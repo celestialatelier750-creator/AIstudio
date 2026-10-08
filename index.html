@@ -96,7 +96,6 @@
 
     output.innerHTML = '<p style="text-align:center; padding-top:100px;">Rendering AI visual assets... Please wait 3 seconds.</p>';
 
-    // Encode prompt to call free Pollinations AI render API
     const encoded = encodeURIComponent(promptText + " 8k resolution cinematic vertical format");
     const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=540&height=960&nologo=true`;
 
