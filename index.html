@@ -3,135 +3,777 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>AuraStudio — AI Media Creator</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #08090d; color: #ffffff; min-height: 100vh; }
-    .app { display: flex; min-height: 100vh; }
-    .sidebar { width: 240px; background: #0d0f15; border-right: 1px solid #22252f; padding: 20px 15px; display: flex; flex-direction: column; flex-shrink: 0; }
-    .logo { display: flex; align-items: center; gap: 12px; padding: 0 5px 25px; }
-    .logo-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; background: linear-gradient(135deg, #8b5cf6, #ec4899); }
-    .logo-name { font-size: 16px; font-weight: bold; }
-    .section-title { color: #656b7b; font-size: 10px; font-weight: bold; letter-spacing: 2px; padding: 0 5px 8px; }
-    .menu { display: flex; flex-direction: column; gap: 5px; }
-    .menu button { border: none; background: transparent; color: #999fad; padding: 10px; border-radius: 8px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; font-size: 13px; }
-    .menu button:hover, .menu button.active { background: #191c26; color: white; }
-    .menu button.active { box-shadow: inset 3px 0 #a78bfa; }
-    .main { flex: 1; padding: 30px; max-width: 1300px; margin: auto; width: 100%; }
-    .header { margin-bottom: 25px; }
-    .eyebrow { color: #777d8c; font-size: 10px; letter-spacing: 3px; font-weight: bold; }
-    h1 { font-size: 32px; margin: 6px 0; }
-    h1 span { color: #a78bfa; }
-    .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .card { border: 1px solid #22252f; background: linear-gradient(145deg, #12141c, #0e1016); border-radius: 16px; padding: 20px; }
-    textarea { width: 100%; height: 120px; background: #090b10; border: 1px solid #282b35; border-radius: 10px; padding: 12px; color: white; outline: none; font-size: 13px; margin: 12px 0; }
-    .generate { width: 100%; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, #8b5cf6, #c026d3); }
-    .result-box { background: #090b10; border: 1px solid #252832; border-radius: 10px; padding: 15px; margin-top: 12px; min-height: 360px; font-size: 13px; line-height: 1.5; color: #d4d7df; }
-    .media-render { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #333745; max-height: 320px; object-fit: cover; }
-    .scene-card { background: #12151f; border: 1px solid #282c3c; border-radius: 6px; padding: 8px; margin-top: 6px; font-size: 11px; }
-    @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } .sidebar { width: 100%; } .app { display: block; } }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #08090d;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 240px;
+      background: #0d0f15;
+      border-right: 1px solid #22252f;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 5px 25px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    }
+
+    .logo-name {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .section-title {
+      color: #656b7b;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      padding: 0 5px 8px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu button {
+      border: none;
+      background: transparent;
+      color: #999fad;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      transition: 0.2s;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: #191c26;
+      color: white;
+    }
+
+    .menu button.active {
+      box-shadow: inset 3px 0 #a78bfa;
+    }
+
+    /* MAIN */
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      max-width: 1300px;
+      margin: auto;
+      width: 100%;
+    }
+
+    .header {
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      color: #777d8c;
+      font-size: 10px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin: 6px 0;
+    }
+
+    h1 span {
+      color: #a78bfa;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #22252f;
+      background: linear-gradient(145deg, #12141c, #0e1016);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card h2 {
+      font-size: 19px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #090b10;
+      border: 1px solid #282b35;
+      border-radius: 10px;
+      padding: 12px;
+      color: white;
+      outline: none;
+      font-size: 13px;
+      margin: 12px 0;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      border-color: #8b5cf6;
+    }
+
+    .generate {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #8b5cf6, #c026d3);
+      transition: 0.2s;
+    }
+
+    .generate:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .generate:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    /* OUTPUT */
+
+    .result-box {
+      background: #090b10;
+      border: 1px solid #252832;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 12px;
+      min-height: 360px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #d4d7df;
+      overflow: hidden;
+    }
+
+    .media-render {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #333745;
+      max-height: 520px;
+      object-fit: contain;
+      background: #050608;
+    }
+
+    .scene-card {
+      background: #12151f;
+      border: 1px solid #282c3c;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 7px;
+      font-size: 11px;
+    }
+
+    .loading {
+      text-align: center;
+      padding-top: 100px;
+      color: #aaa;
+    }
+
+    .spinner {
+      width: 35px;
+      height: 35px;
+      border: 3px solid #292c38;
+      border-top-color: #a78bfa;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 9px 14px;
+      background: #191c26;
+      color: white;
+      border: 1px solid #343847;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .download-btn:hover {
+      background: #252936;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #22252f;
+        padding: 15px;
+      }
+
+      .logo {
+        padding-bottom: 15px;
+      }
+
+      .menu {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .menu button {
+        white-space: nowrap;
+      }
+
+      .main {
+        padding: 20px 15px;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
 <div class="app">
+
+  <!-- SIDEBAR -->
+
   <aside class="sidebar">
+
     <div class="logo">
       <div class="logo-icon">A</div>
-      <div><div class="logo-name">AuraStudio</div></div>
+
+      <div>
+        <div class="logo-name">AuraStudio</div>
+      </div>
     </div>
-    <div class="section-title">STUDIOS</div>
+
+    <div class="section-title">
+      STUDIOS
+    </div>
+
     <div class="menu">
-      <button class="active" onclick="setMode('image', '✦ Image Studio')"><span class="menu-icon">✦</span> Image Studio</button>
-      <button onclick="setMode('video', '▶ Video Studio')"><span class="menu-icon">▶</span> Video Studio (60s+)</button>
-      <button onclick="setMode('fashion', '◇ Fashion Studio')"><span class="menu-icon">◇</span> Fashion Studio</button>
+
+      <button
+        class="active"
+        onclick="setMode('image', '✦ Image Studio', this)">
+        <span>✦</span>
+        Image Studio
+      </button>
+
+      <button
+        onclick="setMode('video', '▶ Video Studio', this)">
+        <span>▶</span>
+        Video Studio
+      </button>
+
+      <button
+        onclick="setMode('fashion', '◇ Fashion Studio', this)">
+        <span>◇</span>
+        Fashion Studio
+      </button>
+
     </div>
+
   </aside>
 
+
+  <!-- MAIN -->
+
   <main class="main">
+
     <header class="header">
-      <div class="eyebrow">AI MEDIA CREATOR</div>
-      <h1>One idea. <span>Visual Media</span> generated.</h1>
+
+      <div class="eyebrow">
+        AI MEDIA CREATOR
+      </div>
+
+      <h1>
+        One idea.
+        <span>Visual Media</span>
+        generated.
+      </h1>
+
     </header>
 
+
     <div class="workspace">
-      <section class="card">
-        <h2 id="studioTitle">✦ Image Studio</h2>
-        <textarea id="prompt" placeholder="Describe what you want to generate (e.g., smiling baby, cyber city)..."></textarea>
-        <button class="generate" onclick="generateMedia()">Generate AI Visual Media →</button>
-      </section>
+
+      <!-- INPUT -->
 
       <section class="card">
-        <div class="eyebrow">OUTPUT RENDER</div>
-        <h2>Your Generated Result</h2>
-        <div class="result-box" id="output">
-          <p style="color:#666; text-align:center; padding-top:100px;">Enter a description and click generate to view AI media renders.</p>
-        </div>
+
+        <h2 id="studioTitle">
+          ✦ Image Studio
+        </h2>
+
+        <textarea
+          id="prompt"
+          placeholder="Describe what you want to generate...&#10;&#10;Example: A futuristic Indian fashion model wearing an elegant celestial galaxy gown, cinematic lighting, luxury fashion photography">
+        </textarea>
+
+        <button
+          id="generateButton"
+          class="generate"
+          onclick="generateMedia()">
+
+          Generate AI Visual Media →
+
+        </button>
+
       </section>
+
+
+      <!-- OUTPUT -->
+
+      <section class="card">
+
+        <div class="eyebrow">
+          OUTPUT RENDER
+        </div>
+
+        <h2 style="margin-top:5px;">
+          Your Generated Result
+        </h2>
+
+        <div class="result-box" id="output">
+
+          <p style="color:#666; text-align:center; padding-top:100px;">
+            Enter a description and click generate to view your AI media.
+          </p>
+
+        </div>
+
+      </section>
+
     </div>
+
   </main>
+
 </div>
 
+
 <script>
-  let currentMode = 'image';
 
-  function setMode(mode, title) {
+  let currentMode = "image";
+
+
+  /*
+   * CHANGE STUDIO
+   */
+
+  function setMode(mode, title, button) {
+
     currentMode = mode;
-    document.getElementById('studioTitle').innerText = title;
-    const btns = document.querySelectorAll('.menu button');
-    btns.forEach(b => b.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-  }
 
-  function generateMedia() {
-    const rawInput = document.getElementById('prompt').value.trim();
-    const output = document.getElementById('output');
+    document.getElementById("studioTitle").innerText = title;
 
-    if (!rawInput) {
-      alert('Please enter a description first.');
-      return;
+    const buttons = document.querySelectorAll(".menu button");
+
+    buttons.forEach(function(btn) {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const prompt = document.getElementById("prompt");
+
+    if (mode === "image") {
+
+      prompt.placeholder =
+        "Describe the image you want to create...\n\nExample: A futuristic Indian fashion model wearing an elegant celestial galaxy gown, cinematic lighting";
+
     }
 
-    output.innerHTML = '<p style="text-align:center; padding-top:100px;">Generating AI visual assets... Please wait 2 seconds.</p>';
+    if (mode === "fashion") {
 
-    // Clean input text for standard image rendering URL
-    const cleanPrompt = rawInput.toLowerCase().replace(/[^a-z0-9\s]/gi, '').replace(/\s+/g, '_');
-    const imageUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}_cinematic_8k_vertical?width=540&height=960&nologo=true`;
+      prompt.placeholder =
+        "Describe the fashion design...\n\nExample: Avant-garde ocean-inspired gown, wearable in real life, elegant, luxurious fashion photography";
 
-    setTimeout(() => {
-      if (currentMode === 'image' || currentMode === 'fashion') {
-        output.innerHTML = `
-          <b>AI Image Concept Render:</b><br>
-          <img src="${imageUrl}" class="media-render" alt="AI Render" onerror="this.onerror=null; this.src='https://picsum.photos/540/960';" /><br><br>
-          <b>Prompt Applied:</b> <span style="color:#aaa;">"${rawInput}"</span>
-        `;
-      } else if (currentMode === 'video') {
-        output.innerHTML = `
-          <b>60+ Second Video Sequence Timeline:</b><br>
-          
-          <div class="scene-card">
-            <b>🎬 Scene 1 (0:00 - 0:15) — Hook</b><br>
-            <i>Prompt:</i> "Dramatic opening shot of ${rawInput}, 8k vertical"
-          </div>
-          <div class="scene-card">
-            <b>🎬 Scene 2 (0:15 - 0:30) — Development</b><br>
-            <i>Prompt:</i> "Cinematic camera movement revealing detailed motion"
-          </div>
-          <div class="scene-card">
-            <b>🎬 Scene 3 (0:30 - 0:45) — Climax</b><br>
-            <i>Prompt:</i> "Atmospheric lighting with high contrast details"
-          </div>
-          <div class="scene-card">
-            <b>🎬 Scene 4 (0:45 - 1:00+) — Outro</b><br>
-            <i>Prompt:</i> "Fade out with smooth aesthetic glow"
-          </div>
+    }
 
-          <p style="margin-top:10px;"><b>Keyframe Preview:</b></p>
-          <img src="${imageUrl}" class="media-render" alt="Keyframe Preview" onerror="this.onerror=null; this.src='https://picsum.photos/540/960';" />
-        `;
-      }
-    }, 1000);
+    if (mode === "video") {
+
+      prompt.placeholder =
+        "Describe the video you want to create...\n\nExample: A cinematic fashion runway in a futuristic galaxy palace";
+
+    }
+
   }
+
+
+  /*
+   * CREATE IMAGE URL
+   */
+
+  function createImageURL(promptText) {
+
+    const enhancedPrompt =
+      promptText +
+      ", cinematic photography, highly detailed, professional lighting, realistic, 8k";
+
+    const encodedPrompt =
+      encodeURIComponent(enhancedPrompt);
+
+    return (
+      "https://image.pollinations.ai/prompt/" +
+      encodedPrompt +
+      "?width=768&height=1024&nologo=true"
+    );
+
+  }
+
+
+  /*
+   * GENERATE MEDIA
+   */
+
+  function generateMedia() {
+
+    const rawInput =
+      document.getElementById("prompt").value.trim();
+
+    const output =
+      document.getElementById("output");
+
+    const button =
+      document.getElementById("generateButton");
+
+
+    if (!rawInput) {
+
+      alert("Please enter a description first.");
+
+      return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText = "Generating...";
+
+
+    output.innerHTML = `
+      <div class="loading">
+
+        <div class="spinner"></div>
+
+        <div>
+          Creating your AI visual...
+        </div>
+
+        <div style="font-size:11px;color:#666;margin-top:6px;">
+          This may take a few moments.
+        </div>
+
+      </div>
+    `;
+
+
+    /*
+     * IMAGE
+     */
+
+    if (
+      currentMode === "image" ||
+      currentMode === "fashion"
+    ) {
+
+      const imageUrl =
+        createImageURL(rawInput);
+
+
+      const image =
+        new Image();
+
+      image.onload = function() {
+
+        output.innerHTML = `
+
+          <b>AI Image Generated</b>
+
+          <img
+            src="${imageUrl}"
+            class="media-render"
+            alt="AI generated image"
+          >
+
+          <br>
+
+          <b>Prompt:</b>
+
+          <span style="color:#aaa;">
+            "${escapeHTML(rawInput)}"
+          </span>
+
+          <br>
+
+          <a
+            href="${imageUrl}"
+            target="_blank"
+            class="download-btn">
+
+            Open Full Image →
+
+          </a>
+
+        `;
+
+        button.disabled = false;
+
+        button.innerText =
+          "Generate AI Visual Media →";
+
+      };
+
+
+      image.onerror = function() {
+
+        output.innerHTML = `
+
+          <div style="text-align:center;padding:70px 15px;">
+
+            <h3>Unable to generate image</h3>
+
+            <p style="color:#777;margin-top:8px;">
+              The image generation service did not return an image.
+              Please try again with a different prompt.
+            </p>
+
+          </div>
+
+        `;
+
+        button.disabled = false;
+
+        button.innerText =
+          "Generate AI Visual Media →";
+
+      };
+
+
+      image.src = imageUrl;
+
+      return;
+
+    }
+
+
+    /*
+     * VIDEO
+     */
+
+    if (currentMode === "video") {
+
+      createVideoConcept(rawInput);
+
+    }
+
+  }
+
+
+  /*
+   * VIDEO CONCEPT
+   *
+   * NOTE:
+   * This creates a storyboard/keyframe preview.
+   * It does NOT generate an actual MP4 video.
+   */
+
+  function createVideoConcept(rawInput) {
+
+    const output =
+      document.getElementById("output");
+
+    const button =
+      document.getElementById("generateButton");
+
+
+    const imageUrl =
+      createImageURL(rawInput);
+
+
+    output.innerHTML = `
+
+      <b>🎬 Video Concept</b>
+
+      <div class="scene-card">
+
+        <b>Scene 1 — Hook</b>
+
+        <br>
+
+        <i>0:00 — 0:15</i>
+
+        <br>
+
+        Dramatic opening shot of:
+        ${escapeHTML(rawInput)}
+
+      </div>
+
+
+      <div class="scene-card">
+
+        <b>Scene 2 — Development</b>
+
+        <br>
+
+        <i>0:15 — 0:30</i>
+
+        <br>
+
+        Cinematic camera movement revealing
+        the environment and main subject.
+
+      </div>
+
+
+      <div class="scene-card">
+
+        <b>Scene 3 — Climax</b>
+
+        <br>
+
+        <i>0:30 — 0:45</i>
+
+        <br>
+
+        Dynamic movement, atmospheric lighting
+        and dramatic visual detail.
+
+      </div>
+
+
+      <div class="scene-card">
+
+        <b>Scene 4 — Outro</b>
+
+        <br>
+
+        <i>0:45 — 1:00+</i>
+
+        <br>
+
+        Smooth cinematic ending with a
+        polished visual transition.
+
+      </div>
+
+
+      <p style="margin-top:15px;">
+        <b>Keyframe Preview:</b>
+      </p>
+
+
+      <img
+        src="${imageUrl}"
+        class="media-render"
+        alt="Video keyframe preview"
+      >
+
+
+      <p style="color:#777;margin-top:10px;font-size:11px;">
+        This is currently a video concept/keyframe preview.
+        Real MP4 generation will require a video-generation API.
+      </p>
+
+    `;
+
+
+    button.disabled = false;
+
+    button.innerText =
+      "Generate AI Visual Media →";
+
+  }
+
+
+  /*
+   * BASIC HTML SAFETY
+   */
+
+  function escapeHTML(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+  }
+
 </script>
 
 </body>
